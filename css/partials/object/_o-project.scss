@@ -31,7 +31,7 @@
 /* メインビジュアル */
 .p-index-mv {
 	position: relative;
-	width: 100vw;
+	width: 100%;
 	height: 100svh;
 	z-index: 1;
 
@@ -86,6 +86,11 @@
 		padding-inline: v.$space-6;
 		color: v.$white;
 		z-index: 3;
+		opacity: 0;
+
+		.is-loaded & {
+      animation: mvContentFade 1.6s ease .8s forwards;
+    }
 	}
 
 	&__catch-inner {
@@ -95,26 +100,30 @@
 
 	&__catch-main {
 		font-size: clamp(2rem, 1.827rem + 0.77vw, 2.75rem);
-		font-weight: bold;
+		font-weight: 500;
 		line-height: 1.6;
 	}
 
 	&__catch-sub {
-		font-size: v.$fs-md;
+		font-size: v.$fs-base;
 		line-height: 1.8;
 	}
 
 	// post
 	&__post {
 		position: absolute;
-		left: auto;
-		right: v.$space-6;
+		right: v.$space-5;
 		bottom: v.$space-5;
 		z-index: 4;
-		width: min(500px, calc(100% - (v.$space-6 * 2)));
+		width: min(500px, 55%);
 		background: rgba(v.$white, 0.95);
 		border-radius: v.$border-radius-md;
 		box-shadow: 6px 6px var(--color-primary);
+
+		opacity: 0;
+		.is-loaded & {
+      animation: mvContentFade 1.2s ease 1s forwards;
+    }
 
 		.c-news-item {
 			border: none;
@@ -134,6 +143,33 @@
 			-webkit-line-clamp: 1;
 		}
 	}
+
+	// ▶▶ レスポンシブ調整
+	// -------------------------------------------
+	// 767px以下
+	@include m.mq(767) {
+		&__post {
+			width: 100%;
+			right: 0;
+			bottom: 1px;
+			border-radius: v.$border-radius-md v.$border-radius-md 0 0;
+			box-shadow:
+				0px -4px var(--color-primary),
+				0px 1px var(--color-primary);
+		}
+	}
+}
+
+// ▶▶ アニメーション
+	// -------------------------------------------
+@keyframes mvContentFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* お知らせ */
@@ -148,7 +184,7 @@
 		position: absolute;
 		left: -5%;
 		top: -5%;
-		width: clamp(20rem, 55%, 47.5rem);
+		width: clamp(20rem, 70%, 50rem);
 		aspect-ratio: 207 / 150;
 		background-color: color-mix(in srgb, var(--color-tertiary) 10%, transparent);
 		mask: url('../img/svg/deco/shape1.svg') no-repeat center / contain;
@@ -174,7 +210,7 @@
 	// 960px以下
 	@include m.mq(960) {
 		&__inner {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 }
@@ -218,8 +254,8 @@
 
 	// ▶▶ レスポンシブ調整
 	// -------------------------------------------
-	// 1280px以下
-	@include m.mq(1280) {
+	// 960px以下
+	@include m.mq(960) {
 		.l-container {
 			min-height: auto;
 			align-items: flex-start;
@@ -231,10 +267,10 @@
 		}
 		&__image {
 			position: static;
-			width: calc(100% + (100vw - 100%) / 2);
 			height: auto;
 			aspect-ratio: 3 / 2;
-			margin-left: auto;
+			width: calc(100% + (50vw - 50%));
+			margin-right: calc(50% - 50vw);
 
 			img {
 				border-radius: v.$border-radius-xl 0 0 v.$border-radius-xl;
@@ -255,9 +291,9 @@
 	&::after {
 		content: '';
 		position: absolute;
-		right: -8%;
+		right: -5%;
 		top: -5%;
-		width: clamp(21.875rem, 85%, 80rem);
+		width: 90%;
 		aspect-ratio: 193 / 150;
 		background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
 		mask: url('../img/svg/deco/shape2.svg') no-repeat center / contain;
@@ -287,7 +323,7 @@
 	// 960px以下
 	@include m.mq(960) {
 		&__head {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 		&__content {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -296,7 +332,7 @@
 	// 767px以下
 	@include m.mq(767) {
 		&__content {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 }
@@ -357,7 +393,7 @@
 			content: counter(item, decimal-leading-zero);
 			font-size: clamp(3.75rem, 7vw, 6.25rem);
 			font-family: v.$theme-fonts-en;
-			color: rgb(255 255 255 / 40%);
+			color: rgba(#fff, 0.4);
 			line-height: 1;
 		}
 	}
@@ -366,7 +402,8 @@
 		margin-top: v.$space-6;
 
 		.c-button {
-			outline: 1px solid rgba(#fff, 0.7);
+			background-color: rgba(#fff, 0.1);
+			outline: 1px solid #fff;
 		}
 	}
 
@@ -411,10 +448,10 @@
 		}
 	}
 
-	// 960px以下
-	@include m.mq(960) {
+	// 767px以下
+	@include m.mq(767) {
 		&__item-inner {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 }
@@ -657,6 +694,8 @@
 	// -------------------------------------------
 	// 960px以下
 	@include m.mq(960) {
+		margin-top: 0;
+
 		&__content {
 			width: 100%;
 		}
@@ -704,7 +743,7 @@
 	// 960px以下
 	@include m.mq(960) {
 		&__content {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 }
@@ -735,7 +774,8 @@
 
 		&-jp {
 			font-size: v.$fs-4xl;
-			font-weight: bold;
+			font-weight: 500;
+			line-height: 1.4;
 		}
 
 		&-en {
@@ -757,11 +797,20 @@
 			position: absolute;
 			inset: 0;
 			content: '';
-			background: rgba(v.$overlay, 0.2);
+			background: rgba(v.$overlay, 0.3);
 		}
 
 		img {
 			@include m.img-cover;
+		}
+	}
+
+	// ▶▶ レスポンシブ調整
+	// -------------------------------------------
+	// 767px以下
+	@include m.mq(767) {
+		&__inner {
+			height: 50vh;
 		}
 	}
 }
@@ -823,7 +872,7 @@
 	&__person {
 		&-jp {
 			font-size: v.$fs-2xl;
-			font-weight: bold;
+			font-weight: 500;
 		}
 
 		&-en {
@@ -836,7 +885,7 @@
 
 	&__copy {
 		font-size: v.$fs-xl;
-		font-weight: bold;
+		font-weight: 500;
 		line-height: 1.8;
 		margin-bottom: v.$space-5;
 	}
@@ -870,7 +919,7 @@
 	// 767px以下
 	@include m.mq(767) {
 		&__content {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 
 		&__image {
@@ -878,7 +927,7 @@
 		}
 
 		&__career {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 
 		&__career-item {
@@ -950,7 +999,7 @@
 	// 767px以下
 	@include m.mq(767) {
 		&__list {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 }
@@ -975,7 +1024,7 @@
 
 	&__copy {
 		font-size: v.$fs-xl;
-		font-weight: bold;
+		font-weight: 500;
 		line-height: 1.8;
 		margin-bottom: v.$space-4;
 	}
@@ -985,7 +1034,7 @@
 	// 767px以下
 	@include m.mq(767) {
 		&__content {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 }
@@ -1069,7 +1118,7 @@
 
 		&-jp {
 			font-size: v.$fs-lg;
-			font-weight: bold;
+			font-weight: 500;
 		}
 
 		&-en {
@@ -1135,7 +1184,7 @@
 	// 767px以下
 	@include m.mq(767) {
 		&__content {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 
 		&__desc {
@@ -1171,7 +1220,7 @@
 	&__label {
 		display: block;
 		font-size: v.$fs-base;
-		font-weight: bold;
+		font-weight: 500;
 		line-height: 2.8;
 	}
 
@@ -1420,7 +1469,7 @@
 .p-archive-nav {
 	&__select-wrap {
 		position: relative;
-		width: fit-content;
+		width: min(230px, 100%);
 		border-bottom: 1px solid var(--color-primary);
 
 		&::after {
@@ -1440,7 +1489,8 @@
 		font-size: v.$fs-base;
 		font-family: v.$theme-fonts-ja;
 		color: var(--color-text);
-		padding: 12px 40px 12px 16px;
+		background-color: rgba(v.$primary-100, 0.2);
+		padding: 12px 40px 12px 20px;
 		border: none;
 		appearance: none;
 		-webkit-appearance: none;
@@ -1456,7 +1506,7 @@
 .p-archive-blog {
 	&__inner {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 	}
 
 	&__card {
@@ -1514,7 +1564,7 @@
 
 	&__title {
 		font-size: v.$fs-lg;
-		font-weight: bold;
+		font-weight: 500;
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
@@ -1558,10 +1608,10 @@
 		display: grid;
 		place-items: center;
 		color: var(--color-secondary);
-		width: 2.4rem;
-		height: 2.4rem;
+		background-color: v.$secondary-100;
+		width: 3rem;
+		height: 3rem;
 		border-radius: v.$border-radius-round;
-		border: 1px solid;
 
 		&::after {
 			content: '';
@@ -1574,9 +1624,10 @@
 	// 767px以下
 	@include m.mq(767) {
 		&__card {
-			grid-template-rows: 1fr auto auto auto;
+			grid-template-columns: min(240px, 70%) minmax(0, 1fr);
 			padding-right: 0;
 		}
+
 		&__content {
 			grid-column: 1 / -1;
 			margin-left: 0;
@@ -1586,7 +1637,7 @@
 		&__arrow {
 			grid-column: 1 / -1;
 			position: static;
-			transform: translateY(0);
+			transform: none;
 			margin-left: auto;
 		}
 	}
@@ -1595,97 +1646,7 @@
 .p-archive-news {
 	&__inner {
 		display: grid;
-		grid-template-columns: 1fr;
-	}
-
-	&__card {
-		border-top: 1px solid v.$gray-200;
-		border-bottom: 1px solid v.$gray-200;
-
-		& + & {
-			border-top: none;
-		}
-	}
-
-	&__link {
-		position: relative;
-		@include m.grid-cols(240px 30px minmax(0, 1fr));
-		align-items: flex-start;
-		padding-block: v.$space-6;
-		padding-right: 4rem;
-	}
-
-	&__thumbnail {
-		position: relative;
-		aspect-ratio: 4 / 5;
-		margin: 0;
-		border-radius: v.$border-radius-md;
-		overflow: clip;
-
-		img {
-			@include m.img-cover;
-			transition: transform 0.6s v.$ease-hover;
-		}
-	}
-
-	&__content {
-		@include m.flex-column(v.$space-4);
-		align-self: flex-end;
-		margin-left: v.$space-6;
-	}
-
-	&__title {
-		font-size: v.$fs-lg;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-		overflow: clip;
-	}
-
-	&__date {
-		width: 30px;
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-		font-size: v.$fs-xl;
-		font-family: v.$theme-fonts-en;
-		color: v.$gray-400;
-		writing-mode: vertical-rl;
-	}
-
-	&__categories {
-		position: relative;
-		display: flex;
-		flex-wrap: wrap;
-		gap: v.$space-1;
-	}
-	&__category {
-		display: inline-block;
-		font-size: v.$fs-sm;
-		color: var(--color-primary);
-		line-height: 1.8;
-		padding-inline: 0.8em;
-		border-radius: v.$border-radius-round;
-		border: 1px solid var(--color-primary);
-	}
-
-	&__arrow {
-		position: absolute;
-		top: 50%;
-		right: 0;
-		transform: translateY(-50%);
-		display: grid;
-		place-items: center;
-		color: var(--color-primary);
-		width: 2.4rem;
-		height: 2.4rem;
-		border-radius: v.$border-radius-round;
-		border: 1px solid;
-
-		&::after {
-			content: '';
-			@include m.svg-icon(v.$icon-arrow-right);
-		}
+		grid-template-columns: minmax(0, 1fr);
 	}
 }
 
@@ -1717,13 +1678,7 @@
 	}
 
 	&__thumbnail {
-		border-radius: v.$border-radius-md;
 		margin-bottom: v.$space-6;
-		overflow: clip;
-
-		img {
-			@include m.img-cover;
-		}
 	}
 }
 
@@ -1771,7 +1726,7 @@
 .p-search-form {
 	display: flex;
 	align-items: stretch;
-	width: fit-content;
+	width: min(230px, 100%);
 
 	&__input {
 		flex: 1;
@@ -1877,7 +1832,7 @@
 		&__link {
 			@include m.flex-center;
 			font-size: v.$fs-base;
-			font-weight: bold;
+			font-weight: 500;
 			width: 100%;
 			height: v.$fixed-btn-height;
 			color: #fff;

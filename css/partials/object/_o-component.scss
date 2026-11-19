@@ -137,14 +137,14 @@
 
 /* パンくずリスト */
 .c-breadcrumb {
-	padding-inline: v.$space-6;
+	padding-inline: v.$space-5;
 	margin-block: v.$space-6;
 
 	&__list {
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
-		line-height: 1.8;
+		line-height: 2;
 
 		> * + * {
 			position: relative;
@@ -215,16 +215,16 @@
 }
 
 .c-single-navigation {
-	@include m.grid-cols(minmax(0, 1fr) auto minmax(0, 1fr), v.$space-2);
+	@include m.grid-cols(minmax(0, 1fr) minmax(200px, auto) minmax(0, 1fr), v.$space-2);
 	align-items: center;
 	margin-top: v.$space-8;
 
 	&__prev {
-		justify-items: flex-start;
+		justify-self: flex-start;
 	}
 
 	&__list {
-		justify-items: center;
+		justify-self: center;
 
 		.c-single-navigation__link {
 			min-width: 200px;
@@ -234,14 +234,14 @@
 	}
 
 	&__next {
-		justify-items: flex-end;
+		justify-self: flex-end;
 	}
 
 	&__link {
 		display: grid;
 		place-items: center;
-		width: 60px;
-		height: 60px;
+		height: 56px;
+		aspect-ratio: 1;
 		border: 1px solid v.$secondary-300;
 		border-radius: v.$border-radius-round;
 		font-size: v.$fs-base;
@@ -324,7 +324,7 @@
 .c-schedule {
 	font-size: v.$fs-sm;
 	&__table {
-		width: min(600px, 100%);
+		width: min(560px, 100%);
 		overflow: clip;
 		border-radius: v.$border-radius-sm;
 	}
@@ -333,7 +333,8 @@
 			white-space: nowrap;
 		}
 
-		th,td {
+		th,
+		td {
 			border-bottom: 1px solid v.$secondary-200;
 		}
 	}
@@ -378,7 +379,7 @@
 		gap: v.$space-4;
 	}
 	&__date {
-		color: v.$primary-300;
+		color: v.$gray-400;
 		font-family: v.$theme-fonts-en;
 		font-size: v.$fs-base;
 	}
@@ -406,10 +407,10 @@
 		display: grid;
 		place-items: center;
 		color: var(--color-secondary);
+		background-color: v.$secondary-100;
 		width: 2.4rem;
 		height: 2.4rem;
 		border-radius: v.$border-radius-round;
-		border: 1px solid;
 
 		&::after {
 			content: '';
@@ -548,7 +549,7 @@
 
 	&__image {
 		position: relative;
-		width: clamp(9.375rem, 8.654rem + 3.21vw, 12.5rem);
+		width: min(100%,240px);
 		display: grid;
 		place-items: center;
 		aspect-ratio: 1;
@@ -598,12 +599,12 @@
 	&__arrow {
 		display: grid;
 		place-items: center;
-		justify-self: flex-end;
 		color: var(--color-primary);
 		background-color: v.$white;
 		width: 3rem;
 		height: 2rem;
 		transform: translateX(0);
+		margin-left: auto;
 		transition: transform 0.4s v.$ease-hover;
 		border-radius: v.$border-radius-round;
 		border: 1px solid;
@@ -631,11 +632,17 @@
 			}
 		}
 	}
+
+	@include m.mq(767) {
+		&__image {
+			width: min(100%,150px);
+		}
+	}
 }
 
 /* ギャラリー */
 .c-gallery {
-	--gallery-column-gap: #{v.$space-4};
+	--gallery-column-gap: #{v.$space-3};
 	--gallery-row-gap: #{v.$space-6};
 	--gallery-radius: #{v.$border-radius-md};
 
@@ -658,6 +665,7 @@
 	}
 
 	&__image {
+		position: relative;
 		aspect-ratio: 3 / 2;
 		overflow: clip;
 		border-radius: var(--gallery-radius);
@@ -669,6 +677,9 @@
 			--icon-size: 20px;
 
 			position: relative;
+			display: block;
+			width: 100%;
+			height: 100%;
 			cursor: zoom-in;
 
 			&::before {
@@ -686,7 +697,6 @@
 
 			&::after {
 				content: '';
-				@include m.svg-icon(v.$icon-zoom-in);
 				position: absolute;
 				top: calc(var(--icon-position-top) + var(--icon-circle-size) / 2);
 				right: calc(var(--icon-position-right) + var(--icon-circle-size) / 2);
@@ -742,7 +752,7 @@
 	// }
 
 	@include m.mq(767) {
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 
 		&__item {
 			&--col2,
@@ -766,7 +776,7 @@
 	width: fit-content;
 	height: 56px;
 	padding-inline: v.$space-3;
-	font-weight: bold;
+	font-weight: 500;
 	color: v.$white;
 	background-color: var(--color-secondary);
 	border-radius: v.$border-radius-round;
@@ -842,6 +852,7 @@
 
 	&__arrow {
 		font-size: v.$fs-lg;
+		line-height: 1;
 		&::after {
 			content: '';
 			@include m.svg-icon(v.$icon-arrow-chevron-up);
@@ -976,7 +987,7 @@
 		}
 
 		@include m.mq(767) {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 

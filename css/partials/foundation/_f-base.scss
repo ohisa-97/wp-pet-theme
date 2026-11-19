@@ -30,38 +30,33 @@
 	outline-offset: 4px;
 }
 
+// マウス・タッチ操作時はアウトラインを非表示
+:focus {
+	outline: none;
+}
+
 // wpの疑似要素改行対策
 :where(nav li)::before {
 	content: '';
 }
 
-// popoverの背景要素
-::backdrop {
-	background: rgba(v.$black, 0.4);
-}
-
 /* ▶ base style */
 body {
-	background-color: var(--color-bg);
 	color: var(--color-text);
+	font-size: v.$fs-base;
 	font-family: v.$theme-fonts-ja;
 	font-feature-settings: 'palt';
 	line-height: 2;
 	letter-spacing: 0.08em;
 	line-break: strict;
+	background-color: var(--color-bg);
 	min-height: 100svh;
 	overflow-x: clip;
 	scrollbar-gutter: stable;
-	text-rendering: optimizeLegibility;
 
 	@include m.mq(767) {
 		padding-bottom: v.$fixed-btn-height;
 	}
-}
-
-html.is-drawer-open,
-body.is-drawer-open {
-	overflow: hidden;
 }
 
 html:has(#wpadminbar) {
@@ -80,6 +75,11 @@ html:has(#wpadminbar) {
 	}
 }
 
+html.is-drawer-open,
+body.is-drawer-open {
+	overflow: hidden;
+}
+
 [data-lenis-prevent] {
 	overscroll-behavior: contain;
 }
@@ -95,13 +95,12 @@ html:has(#wpadminbar) {
 }
 
 :where(h1, h2, h3, h4) {
+	font-weight: 500;
 	line-height: 1.6;
 }
 
 :where(p) {
 	margin: 0;
-	text-wrap: pretty;
-	line-break: strict;
 }
 
 :where(ul, ol) {

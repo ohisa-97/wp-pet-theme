@@ -270,17 +270,6 @@
 }
 
 // =======================================================================
-// Column Layout
-// =======================================================================
-// 横並びコンテンツのカラム数（幅）を定義する
-
-// 使用例:
-// @include m.column(3);
-@mixin column($cols) {
-	width: calc(100% / $cols);
-}
-
-// =======================================================================
 // Positioning
 // =======================================================================
 // `position`プロパティを使用して配置を定義する
@@ -317,17 +306,6 @@
 	> * + * {
 		margin-top: $space;
 	}
-}
-
-// =======================================================================
-// Cluster Layout ※後で削除
-// =======================================================================
-// Flexboxのgapプロパティを設定するmixinです。
-
-// 使用例:
-// @include m.cluster(10px);
-@mixin cluster($gap) {
-	gap: $gap;
 }
 
 // =======================================================================
@@ -453,27 +431,3 @@
 	z-index: $z-index;
 }
 
-// =======================================================================
-// Plugin
-// =======================================================================
-// contact form 7
-// フォームの必須フィールドにマークを付ける
-// 使用例:
-// @include m.form-required-sign(required);
-@mixin form-required-sign($type: any) {
-	border-radius: 5px;
-	color: v.$white;
-	display: inline-block;
-	font-size: v.$fs-sm;
-	font-weight: bold;
-	margin-left: v.$space-3;
-	padding: 0 0.5rem;
-
-	@if $type == any {
-		background-color: lighten(v.$blue, 10%);
-	} @else if $type == required {
-		background-color: lighten(v.$orange, 10%);
-	} @else {
-		background-color: lighten(v.$blue, 10%);
-	}
-}
