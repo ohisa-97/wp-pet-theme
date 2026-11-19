@@ -1,0 +1,125 @@
+@use 'f-variables' as v;
+@use 'f-mixins' as m;
+
+// サイト全体で共通のスタイルを定義する。
+// デフォルトのフォントサイズや色、リンクのスタイルなど
+
+:root {
+	@include m.theme(
+		v.$primary-300,
+		// primary
+		v.$secondary-300,
+		// secondary
+		v.$tertiary-300,
+		// tertiary
+		v.$text-black,
+		// text
+		v.$surface,
+		// surface
+		v.$gray-300,
+		// stroke
+		v.$background,
+		// bg
+		v.$link // link
+	);
+}
+
+// TABキーによるフォーカス時のスタイル
+:focus-visible {
+	outline: 3px solid v.$focus;
+	outline-offset: 4px;
+}
+
+// wpの疑似要素改行対策
+:where(nav li)::before {
+	content: '';
+}
+
+// popoverの背景要素
+::backdrop {
+	background: rgba(v.$black, 0.4);
+}
+
+/* ▶ base style */
+body {
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	font-family: v.$theme-fonts-ja;
+	font-feature-settings: 'palt';
+	line-height: 2;
+	letter-spacing: 0.08em;
+	line-break: strict;
+	min-height: 100svh;
+	overflow-x: clip;
+	scrollbar-gutter: stable;
+	text-rendering: optimizeLegibility;
+
+	@include m.mq(767) {
+		padding-bottom: v.$fixed-btn-height;
+	}
+}
+
+html.is-drawer-open,
+body.is-drawer-open {
+	overflow: hidden;
+}
+
+html:has(#wpadminbar) {
+	margin-top: 32px;
+
+	.l-header {
+		top: 32px;
+	}
+
+	@media screen and (max-width: 782px) {
+		margin-top: 46px;
+
+		.l-header {
+			top: 46px;
+		}
+	}
+}
+
+[data-lenis-prevent] {
+	overscroll-behavior: contain;
+}
+
+:where(a) {
+	color: inherit;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+	margin: 0;
+}
+
+:where(h1, h2, h3, h4) {
+	line-height: 1.6;
+}
+
+:where(p) {
+	margin: 0;
+	text-wrap: pretty;
+	line-break: strict;
+}
+
+:where(ul, ol) {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+:where(dl, dd) {
+	margin: 0;
+}
+
+:where(figure) {
+	margin: 0;
+}
+
+:where(img, video) {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}

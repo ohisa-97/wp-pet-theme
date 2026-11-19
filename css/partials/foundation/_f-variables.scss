@@ -1,0 +1,234 @@
+// サイト全体で使用する共通の変数を定義しています。
+//
+// 色、フォント、サイズ、ブレイクポイントなどを管理します。
+//
+// 【使い方】
+// 他のSCSSファイルから使用する場合は、
+// v.$〇〇 の形式で呼び出してください。
+//
+// 使用例：
+// color: v.$text-black;
+// font-size: v.$fs-base;
+
+// =======================================================================
+//    Colors
+// =======================================================================
+// サイトカラーに関連する変数です。
+
+// Base Colors
+$plGy: #efefef; // 薄いグレー
+$ltGy: #d4d4d4; // 更に薄いグレー
+$mdGy: #9f9f9f; // 中間グレー
+$dkGy: #555555; // ダークグレー
+
+$white: #ffffff; // 白
+$silver: #cccccc; // 銀色
+$black: #000000; // 黒
+$orange: #ff3300; // オレンジ
+$gamboge: #ff9900; // ガンボージ（黄色）
+$yellow: #ffff00; // 黄色
+$harlequin: #33ff00; // ハーレクイン（鮮やかな緑）
+$green: #339900; // 緑
+$blue: #0066ff; // 青
+$water: #66ccff; // 水色
+$orchid: #cc00ff; // オーキッド（紫）
+
+// Theme Colors
+$primary-100: #f2f9fe;
+$primary-200: #d9ecfa;
+$primary-300: #a9d6f5;
+$primary-400: #7dbbe3;
+$primary-500: #4e9bcf;
+
+$secondary-100: #f1faf7;
+$secondary-200: #d5eee5;
+$secondary-300: #6ebea2;
+$secondary-400: #4ca88a;
+$secondary-500: #34856d;
+
+$tertiary-100: #fff9e9;
+$tertiary-200: #ffedba;
+$tertiary-300: #ffd97d;
+$tertiary-400: #e8ba55;
+$tertiary-500: #c99a35;
+
+$gray-100: #f7f7f7;
+$gray-200: #e9e9e9;
+$gray-300: #d5d5d5;
+$gray-400: #b0b0b0;
+$gray-500: #7d7d7d;
+
+// Semantic Colors
+$text-black: #4a4845;
+
+$surface: $white;
+$background: $white;
+
+$border: $gray-300;
+$border-light: $gray-200;
+$border-dark: $gray-400;
+
+$link: $primary-400;
+$link-hover: $primary-500;
+
+$focus: $primary-500;
+
+$overlay: #1F5273;
+
+// =======================================================================
+//   Fonts
+// =======================================================================
+// フォント関連の変数です。
+
+// Base Fonts
+$default:
+	'Helvetica Neue LT', 'Helvetica Neue', Helvetica, 'Hiragino Sans', 'Yu Gothic', 游ゴシック体, 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro', メイリオ, Meiryo, sans-serif; // デフォルトフォント
+$number: 'Times New Roman'; // 数字フォント
+$en: -apple-system, BlinkMacSystemFont; // 英語用フォント
+$mincho:
+	'Times New Roman', '游明朝', 'Yu Mincho', '游明朝体', 'YuMincho', 'ヒラギノ明朝 Pro W3', 'Hiragino Mincho Pro', 'HiraMinProN-W3', 'HGS明朝E', 'ＭＳ Ｐ明朝', 'MS PMincho', serif; // 明朝体フォント
+
+// Theme Fonts
+$theme-fonts-ja: 'Zen Maru Gothic', sans-serif;
+$theme-fonts-en: 'Nunito', sans-serif;
+
+// =======================================================================
+//   Typography
+// =======================================================================
+// ビューポート単位に基づくフォントサイズの変数です。
+
+$fs-xs: clamp(0.625rem, 0.581rem + 0.188vw, 0.75rem); // 10px ~ 12px
+$fs-sm: clamp(0.75rem, 0.706rem + 0.188vw, 0.875rem); // 12px ~ 14px
+$fs-base: clamp(0.875rem, 0.831rem + 0.188vw, 1rem); // 14px ~ 16px
+$fs-md: clamp(1rem, 0.956rem + 0.188vw, 1.125rem); // 16px ~ 18px
+$fs-lg: clamp(1.125rem, 1.081rem + 0.188vw, 1.25rem); // 18px ~ 20px
+$fs-xl: clamp(1.25rem, 1.162rem + 0.376vw, 1.5rem); // 20px ~ 24px
+$fs-2xl: clamp(1.5rem, 1.368rem + 0.563vw, 1.875rem); // 24px ~ 30px
+$fs-3xl: clamp(1.875rem, 1.743rem + 0.563vw, 2.25rem); // 30px ~ 36px
+$fs-4xl: clamp(2.25rem, 2.074rem + 0.751vw, 2.75rem); // 36px ~ 44px
+$fs-5xl: clamp(2.75rem, 2.486rem + 1.127vw, 3.5rem); // 44px ~ 56px
+
+// =======================================================================
+//   Media Query
+// =======================================================================
+// メディアクエリに関する変数です。
+
+$breakpoints: (
+	1440: 1440px,
+	1280: 1280px,
+	1024: 1024px,
+	960: 960px,
+	767: 767px,
+	559: 559px,
+);
+
+// =======================================================================
+//   Box Shadow
+// =======================================================================
+// ボックスシャドウに関する変数です。
+$box-shadow: 0 3px 15px rgba(90, 74, 55, 0.1); // 基本のボックスシャドウ
+$box-shadow-hover:
+	1rem 1rem 1.5rem rgba(0, 0, 0, 0.08),
+	-1rem -1rem 1.5rem var(--color-bg); // ホバー時のボックスシャドウ
+$box-shadow-inset:
+	inset 0.8rem 0.8rem 1.2rem rgba(0, 0, 0, 0.05),
+	inset -0.8rem -0.8rem 1.2rem var(--color-bg); // インセットボックスシャドウ
+$box-shadow-light:
+	0.8rem 0.8rem 1.2rem rgba(0, 0, 0, 0.05),
+	-0.8rem -0.8rem 1.2rem #fff;
+$box-shadow-dark:
+	0.8rem 0.8rem 1.2rem rgba(0, 0, 0, 0.1),
+	-0.8rem -0.8rem 1.2rem rgba(#fff, 0.2); // ダークテーマ用ボックスシャドウ
+
+// =======================================================================
+//   Path
+// =======================================================================
+// 画像やリソースのパスを設定する変数です。
+
+$path: '../img/'; // 画像ファイルのパス
+
+// =======================================================================
+//   Spacing and Layout
+// =======================================================================
+// スペースやレイアウトに関連する変数です。
+
+// Layout
+$header-height-pc: 140px;
+$header-height-sp: 70px;
+
+$fixed-btn-height: 56px;
+
+// Base Spacing
+$space-1: clamp(0.25rem, 0.206rem + 0.188vw, 0.5rem); // 4px ~ 8px
+$space-2: clamp(0.5rem, 0.412rem + 0.376vw, 0.75rem); // 8px ~ 12px
+$space-3: clamp(0.75rem, 0.662rem + 0.376vw, 1rem); // 12px ~ 16px
+$space-4: clamp(1rem, 0.824rem + 0.751vw, 1.5rem); // 16px ~ 24px
+$space-5: clamp(1.5rem, 1.324rem + 0.751vw, 2rem); // 24px ~ 32px
+$space-6: clamp(2rem, 1.648rem + 1.502vw, 3rem); // 32px ~ 48px
+$space-7: clamp(3rem, 2.648rem + 1.502vw, 4rem); // 48px ~ 64px
+$space-8: clamp(4rem, 3.296rem + 3.005vw, 6rem); // 64px ~ 96px
+$space-9: clamp(6rem, 5.296rem + 3.005vw, 8rem); // 96px ~ 128px
+$space-10: clamp(8rem, 7.296rem + 3.005vw, 10rem); // 128px ~ 160px
+
+// Section Spacing
+$space-section: clamp(5rem, 2.535rem + 10.516vw, 12rem); // 80px ~ 192px
+
+// ==================================================
+//   Border
+// ==================================================
+$border-radius-sm: 6px;
+$border-radius-md: 20px;
+$border-radius-lg: 50px;
+$border-radius-xl: 120px;
+$border-radius-round: 9999px;
+
+// =======================================================================
+//   Easing
+// =======================================================================
+$ease-hover: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-in: cubic-bezier(0.4, 0, 1, 1);
+$ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+$ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// ==================================================
+//   Icons
+// ==================================================
+// ▶ Basic Icons
+$icon-tel: '../img/svg/icon/tel.svg';
+$icon-mail: '../img/svg/icon/mail.svg';
+$icon-map: '../img/svg/icon/map.svg';
+$icon-plus: '../img/svg/icon/plus.svg';
+
+// ▶ SNS Icons
+$icon-x: '../img/svg/icon/x.svg';
+$icon-instagram: '../img/svg/icon/instagram.svg';
+$icon-facebook: '../img/svg/icon/facebook.svg';
+
+//  ▶ Arrow Icons
+// arrow-up
+$icon-arrow-up: '../img/svg/icon/arrow-up.svg';
+$icon-arrow-up-right: '../img/svg/icon/arrow-up-right.svg';
+$icon-arrow-up-left: '../img/svg/icon/arrow-up-left.svg';
+$icon-arrow-long-up: '../img/svg/icon/arrow-long-up.svg';
+$icon-arrow-chevron-up: '../img/svg/icon/chevron-up.svg';
+
+// arrow-down
+$icon-arrow-down: '../img/svg/icon/arrow-down.svg';
+$icon-arrow-down-right: '../img/svg/icon/arrow-down-right.svg';
+$icon-arrow-down-left: '../img/svg/icon/arrow-down-left.svg';
+$icon-arrow-long-down: '../img/svg/icon/arrow-long-down.svg';
+$icon-arrow-chevron-down: '../img/svg/icon/chevron-down.svg';
+
+// arrow-right
+$icon-arrow-right: '../img/svg/icon/arrow-right.svg';
+$icon-arrow-long-right: '../img/svg/icon/arrow-long-right.svg';
+$icon-arrow-chevron-right: '../img/svg/icon/chevron-right.svg';
+
+// arrow-left
+$icon-arrow-left: '../img/svg/icon/arrow-left.svg';
+$icon-arrow-long-left: '../img/svg/icon/arrow-long-left.svg';
+$icon-arrow-chevron-left: '../img/svg/icon/chevron-left.svg';
+
+//  ▶ Other Icons
+$icon-zoom-in: '../img/svg/icon/zoom-in.svg';
+$icon-search: '../img/svg/icon/search.svg';

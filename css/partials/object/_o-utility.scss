@@ -1,0 +1,89 @@
+@use '../foundation/f-variables' as v;
+@use '../foundation/f-mixins' as m;
+
+// 単一の役割を持つ汎用的なスタイルを定義する
+
+// スペース調整
+.u-mb-1 {
+	margin-bottom: v.$space-1;
+}
+
+.u-mb-2 {
+	margin-bottom: v.$space-2;
+}
+
+.u-mb-3 {
+	margin-bottom: v.$space-3;
+}
+
+.u-mb-4 {
+	margin-bottom: v.$space-4;
+}
+
+.u-mb-5 {
+	margin-bottom: v.$space-5;
+}
+
+.u-mb-6 {
+	margin-bottom: v.$space-6;
+}
+
+.u-mb-7 {
+	margin-bottom: v.$space-7;
+}
+
+.u-mb-8 {
+	margin-bottom: v.$space-8;
+}
+
+.u-mb-9 {
+	margin-bottom: v.$space-9;
+}
+
+.u-mb-10 {
+	margin-bottom: v.$space-10;
+}
+
+.u-mb-section {
+	margin-bottom: v.$space-section;
+}
+
+/* デバイス別の調整 */
+.u-pc-only {
+	display: block;
+	@include m.mq(767) {
+		display: none;
+	}
+}
+.u-sp-only {
+	display: none;
+	@include m.mq(767) {
+		display: block;
+	}
+}
+
+/* スタイル調整 */
+.u-center {
+	text-align: center;
+}
+.u-left {
+	text-align: left;
+}
+.u-bold {
+	font-weight: bold;
+}
+.u-color-primary {
+	color: var(--color-primary);
+}
+.u-color-secondary {
+	color: var(--color-secondary);
+}
+.u-color-tertiary {
+	color: var(--color-tertiary);
+}
+.u-underline {
+	text-decoration: underline;
+}
+.u-font-en {
+  font-family: v.$theme-fonts-en;
+}

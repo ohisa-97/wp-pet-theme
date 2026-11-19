@@ -1,0 +1,479 @@
+@use 'f-variables' as v;
+
+// 共通して使用するスタイルをMixinとして定義しています。
+//
+// 【使い方】
+// 1. 使用したいMixinを @include m.〇〇 で呼び出します。
+// 2. 引数があるMixinの場合は、必要な値を指定します。
+//
+// 使用例：
+// [引数がある場合] @include m.btn(blue);
+// [引数がない場合] @include m.btn();
+
+// =======================================================================
+// Theme Color
+// =======================================================================
+// テーマカラーを定義する
+
+// 使用例:
+// @include m.theme(#ff5722, #03a9f4, #8bc34a, #212121, #f5f5f5, #bdbdbd, #ffffff, #3f51b5);
+@mixin theme($color-primary, $color-secondary, $color-tertiary, $color-text, $color-surface, $color-border, $color-bg, $color-link) {
+	--color-primary: #{$color-primary};
+	--color-secondary: #{$color-secondary};
+	--color-tertiary: #{$color-tertiary};
+	--color-text: #{$color-text};
+	--color-surface: #{$color-surface};
+	--color-border: #{$color-border};
+	--color-bg: #{$color-bg};
+	--color-link: #{$color-link};
+}
+
+// =======================================================================
+// Media Query
+// =======================================================================
+// メディアクエリのブレイクポイントを定義する
+
+// $bq：適用するブレイクポイント（参照元：f-variables.css > Media Query）
+// 使用例:
+// @include m.mq(768);
+@mixin mq($bp) {
+	$breakpoint: map-get(v.$breakpoints, $bp);
+
+	@media (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+// =======================================================================
+// Container Query
+// =======================================================================
+// コンテナクエリを定義する
+
+// 使用例:
+// @include m.cq(main-container, min, width, 500px) { ... }
+@mixin cq($container-name, $type: max, $feature: width, $value) {
+	@if $container-name {
+		@container #{$container-name} (#{ $type }-#{ $feature }: #{ $value }) {
+			@content;
+		}
+	} @else {
+		@container (#{ $type }-#{ $feature }: #{ $value }) {
+			@content;
+		}
+	}
+}
+
+// =======================================================================
+// Touch Device (Pointer: Coarse)
+// =======================================================================
+// タッチデバイス（指で操作するデバイス）用のスタイルを定義する
+
+// 使用例:
+// @include m.touch-device {
+//   /* タッチデバイス用のスタイル */
+// }
+@mixin touch-device {
+	@media (pointer: coarse) {
+		@content;
+	}
+}
+
+// =======================================================================
+// Hover Device (Hover: Hover)
+// =======================================================================
+// ホバー操作が可能なデバイス用のスタイルを定義する
+
+// 使用例:
+// @include m.hover-device {
+//   /* ホバー可能なデバイス用のスタイル */
+// }
+@mixin hover-device {
+	@media (hover: hover) {
+		@content;
+	}
+}
+
+// =======================================================================
+// Page ID Selector
+// =======================================================================
+// 特定のページIDに応じたスタイルを定義する
+
+// 使用例:
+// @include m.page-id-selector(42) { ... }
+@mixin page-id-selector($pid) {
+	.page-id-#{$pid} {
+		@content;
+	}
+}
+
+// =======================================================================
+// Outline
+// =======================================================================
+// 要素にアウトラインを付与する
+
+// 使用例:
+// @include m.outline(1, red);
+@mixin outline($state: 0, $color: blue) {
+	@if $state == 1 {
+		border: 2px solid $color;
+	}
+}
+
+// =======================================================================
+// Reset List
+// =======================================================================
+// リストのデフォルトスタイルを無効化する
+
+// 使用例:
+// @include m.reset-list;
+@mixin reset-list {
+	list-style-type: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+// =======================================================================
+// Text Styling
+// =======================================================================
+// テキストのフォントサイズ・文字色・フォント・太さ・大文字/小文字をまとめて指定する
+
+// 使用例:
+// @include m.text(16px, #333, Arial, 700, uppercase);
+@mixin text($size: v.$fs-base, $color: var(--color-text), $lang: v.$default, $weight: 500, $t-transform: none) {
+	color: $color;
+	font-size: $size;
+	font-family: $lang;
+	font-weight: $weight;
+	text-transform: $t-transform;
+}
+
+// =======================================================================
+// Icon（Material Symbols / SVG）
+// =======================================================================
+// Material Symbols をアイコンとして表示する（疑似要素で使用）
+//
+// $icon : 表示する Material Symbols のアイコン名（必須）
+// ※ Material Symbols が読み込まれていることが前提です。
+// 使用例：
+// @include m.material-icon('search');
+
+@mixin material-icon($icon) {
+	font-family: 'Material Symbols Outlined';
+	content: '#{$icon}';
+	line-height: 1;
+	flex-shrink: 0;
+}
+
+// SVGアイコンの種類、サイズ、色を定義する
+//
+// $name      : 使用するアイコンの変数（参照元：f-variables.css > Icons）
+// $size      : アイコンのサイズ（デフォルト：1em）
+// $color     : アイコンの色（デフォルト：currentColor）
+// 使用例:
+// @include m.svg-icon(v.$icon-tel);
+@mixin svg-icon($name, $size: 1em, $color: currentColor) {
+	display: inline-block;
+	width: $size;
+	height: $size;
+	flex-shrink: 0;
+	background-color: $color;
+	mask-image: url($name);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: contain;
+}
+
+// =======================================================================
+// Flexbox Layout
+// =======================================================================
+// フレックスレイアウトを定義する
+
+// 向き($direction)・折り返し($wrap)・主軸方向($justify-content)・交差軸方向($align-items)を指定する
+// 使用例:
+// @include m.flex(column, wrap, center, center);
+@mixin flex($direction: row, $wrap: nowrap, $justify-content: flex-start, $align-items: stretch) {
+	display: flex;
+	flex-wrap: $wrap;
+	flex-direction: $direction;
+	justify-content: $justify-content;
+	align-items: $align-items;
+}
+
+// 水平/垂直方向ともに中央揃えにする
+// 使用例；
+// @include m.flex-center(20px);
+@mixin flex-center($gap: null) {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	@if $gap != null {
+		gap: $gap;
+	}
+}
+
+// 垂直方向に並べる
+// 使用例：
+// @include m.flex-column(20px);
+@mixin flex-column($gap: null) {
+	display: flex;
+	flex-direction: column;
+
+	@if $gap != null {
+		gap: $gap;
+	}
+}
+
+// =======================================================================
+// Grid Layout
+// =======================================================================
+// グリッドレイアウトを定義する
+
+// 任意の値で列($cols)を指定する
+// 使用例：
+// @include m.grid-cols(200px 1fr, v.$space-6);
+@mixin grid-cols($cols, $gap: null) {
+	display: grid;
+	grid-template-columns: $cols;
+
+	@if $gap != null {
+		gap: $gap;
+	}
+}
+
+// 指定した列数($cols)で均等幅にする
+// 使用例：
+// @include m.grid-repeat(3);
+@mixin grid-repeat($cols, $gap: null) {
+	display: grid;
+	grid-template-columns: repeat($cols, minmax(0, 1fr));
+
+	@if $gap != null {
+		gap: $gap;
+	}
+}
+
+// 列数($cols)・行数($rows)を指定する
+// 使用例:
+// @include m.grid(3, 2, 20px);
+@mixin grid($cols, $rows: null, $gap: null) {
+	display: grid;
+	grid-template-columns: repeat($cols, 1fr);
+
+	@if $rows != null {
+		grid-template-rows: repeat($rows, 1fr);
+	}
+
+	@if $gap != null {
+		gap: $gap;
+	}
+}
+
+// =======================================================================
+// Column Layout
+// =======================================================================
+// 横並びコンテンツのカラム数（幅）を定義する
+
+// 使用例:
+// @include m.column(3);
+@mixin column($cols) {
+	width: calc(100% / $cols);
+}
+
+// =======================================================================
+// Positioning
+// =======================================================================
+// `position`プロパティを使用して配置を定義する
+
+// 上下左右を個別に指定する
+// 使用例：
+// @include m.position(absolute, 10px auto 0 0);
+// @include m.position(absolute, 10px 20px);
+@mixin position($pos: absolute, $inset: null) {
+	position: $pos;
+
+	@if $inset != null {
+		inset: $inset;
+	}
+}
+
+// 上下左右中央に配置する
+// 使用例：
+// @include m.position-center();
+@mixin position-center($pos: absolute) {
+	position: $pos;
+	inset: 0;
+	margin: auto;
+}
+
+// =======================================================================
+// Stack Layout
+// =======================================================================
+// タテに並ぶ要素の2つ目以降の要素に margin-top を定義する
+
+// 使用例:
+// @include m.stack(20px);
+@mixin stack($space) {
+	> * + * {
+		margin-top: $space;
+	}
+}
+
+// =======================================================================
+// Cluster Layout ※後で削除
+// =======================================================================
+// Flexboxのgapプロパティを設定するmixinです。
+
+// 使用例:
+// @include m.cluster(10px);
+@mixin cluster($gap) {
+	gap: $gap;
+}
+
+// =======================================================================
+// Img
+// =======================================================================
+// img要素のスタイルを定義する
+
+// 画像を枠いっぱいに表示する（はみ出した部分はトリミング）
+// 使用例：
+// @include m.img-cover();
+// @include m.img-cover(center center);
+@mixin img-cover($position: center) {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: $position;
+	display: block;
+}
+
+// 画像全体が枠内に収まるように表示する（画像の縦横比を維持）
+// 使用例：
+// @include m.img-contain();
+@mixin img-contain($position: center) {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: $position;
+	display: block;
+}
+
+// 画像の幅を親要素に合わせて表示する（画像の縦横比を維持）
+// 使用例：
+// @include m.img-fluid();
+@mixin img-fluid {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+// =======================================================================
+// Animation
+// =======================================================================
+// アニメーション動作のアニメーション名、時間、タイミング関数、繰り返し回数、方向、終了状態、遅延時間を指定する
+
+// 使用例:
+// @include m.anime(fadeIn, 2s, ease, infinite, alternate);
+@mixin anime($nam, $dur: 1s, $tim: ease-in-out, $ite: 1, $dir: normal, $fil: forwards, $del: inherit) {
+	animation-name: $nam;
+	animation-duration: $dur;
+	animation-timing-function: $tim;
+	animation-iteration-count: $ite;
+	animation-direction: $dir;
+	animation-fill-mode: $fil;
+	animation-delay: $del;
+}
+
+// =======================================================================
+// Background Image
+// =======================================================================
+// 背景画像の画像ファイル名、背景サイズ、繰り返し、背景位置を指定する
+
+// 使用例:
+// @include m.bg-img('example.jpg', cover, no-repeat, center, center);
+@mixin bg-img($fileName, $siz: cover, $rep: no-repeat, $posX: center, $posY: center) {
+	background-image: url(v.$path + $fileName);
+	background-size: $siz;
+	background-repeat: $rep;
+	background-position: $posX $posY;
+}
+
+// =======================================================================
+// Gradation
+// =======================================================================
+// グラデーションの種類、方向（または形状）、色の停止位置を定義する
+
+// 【線型】グラデーションを指定する
+// $direction : グラデーションの方向（デフォルト：to bottom）
+// $colors    : 使用する色（2色以上）
+// 使用例：
+// @include m.gradient-linear(to bottom, red 0%, blue 100%);
+@mixin gradient-linear($direction: to bottom, $colors...) {
+	background: linear-gradient($direction, $colors...);
+}
+
+// 【円形】グラデーションを指定する
+// $shape  : グラデーションの形状（デフォルト：circle）
+// $colors : 使用する色（2色以上）
+// 使用例：
+// @include m.gradient-radial(circle, red 0%, blue 100%);
+@mixin gradient-radial($shape: circle, $colors...) {
+	background: radial-gradient($shape, $colors...);
+}
+
+// =======================================================================
+// Video
+// =======================================================================
+// 動画の高さと幅の比率を指定して全画面に表示する
+
+// 使用例:
+// @include m.video;
+@mixin video {
+	height: 56.25vw;
+	margin: auto;
+	min-height: 100%;
+	min-width: 100%;
+	position: absolute;
+	inset: 0;
+	width: 177.77777778vh;
+}
+
+// =======================================================================
+// Overlay
+// =======================================================================
+// 単色オーバーレイの色、透明度、z-indexを定義する（疑似要素で使用）
+
+// 使用例:
+// @include m.overlay(#000, 0.8, 2);
+@mixin overlay($color: #000, $opacity: 0.5, $z-index: 1) {
+	background-color: rgba($color, $opacity);
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: $z-index;
+}
+
+// =======================================================================
+// Plugin
+// =======================================================================
+// contact form 7
+// フォームの必須フィールドにマークを付ける
+// 使用例:
+// @include m.form-required-sign(required);
+@mixin form-required-sign($type: any) {
+	border-radius: 5px;
+	color: v.$white;
+	display: inline-block;
+	font-size: v.$fs-sm;
+	font-weight: bold;
+	margin-left: v.$space-3;
+	padding: 0 0.5rem;
+
+	@if $type == any {
+		background-color: lighten(v.$blue, 10%);
+	} @else if $type == required {
+		background-color: lighten(v.$orange, 10%);
+	} @else {
+		background-color: lighten(v.$blue, 10%);
+	}
+}
